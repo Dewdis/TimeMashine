@@ -1,2 +1,2 @@
-# TimeMashine
-Strategy Game
+# YoungGeneral
+Script for strategy onboard games.
