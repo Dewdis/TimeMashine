@@ -79,21 +79,27 @@ while True:
         forces_1 = []
         print('forces 1:')
         fraction_1 = input('fraction: ')
+        if not(fraction_1 in fractions):
+            print('Unknown fraction!')
+            continue
         for i in range(len(types)):
             q = int(input(types[i]+': '))
             forces_1 += [i]*q
         forces_2 = []
         print('forces 2: ')
         fraction_2 = input('fraction: ')
+        if not(fraction_2 in fractions):
+            print('Unknown fraction!')
+            continue
         for i in range(len(types)):
             q = int(input(types[i]+': '))
             forces_2 += [i]*q
         res = fight(forces_1, forces_2, fraction_1, fraction_2)
-        print('loses 1:')
+        print(fraction_1+' loses:')
         for i in range(len(types)):
             print(types[i]+' '+str(res[0][i]),end=' ')
         print()
-        print('loses 2:')
+        print(fraction_2+' loses:')
         for i in range(len(types)):
             print(types[i]+' '+str(res[1][i]),end=' ')
         print()
