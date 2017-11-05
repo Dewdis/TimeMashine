@@ -111,5 +111,14 @@ while True:
             print('No reserve!')
     elif event=='clear':
         os.system('cls' if os.name == 'nt' else 'clear')
+    elif event=='health':
+        print(health)
+    elif event=='damage':
+        for i in range(len(damage)):
+            print(damage[i])
+    elif event=='types':
+        print(types)
+    elif event=='fractions':
+        print(fractions)
     else:
         print('Strange event...')
