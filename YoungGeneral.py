@@ -1,47 +1,9 @@
-# 0 - infantry
-# 1 - cavalry
-# 2 - police
-# 3 - gun
-# 4 - signalman
-# 5 - bomberman
-# 6 - tank
-
 import random
 import sys
 import os
 random.seed()
 
-spawn_k = 70
-types = ['infantry','cavalry','police','gun','signalman','bomberman','tank']
-fractions = ['bolshevik','white','german_empire','britain','russian_empire']
-health = [2,2,1,1,1,1,4]
-damage = [
-    [2,1,1,1,1,1,1], # infantry
-    [1,1,2,1,2,2,1], # cavalry
-    [1,1,1,1,2,2,1], # police
-    [3,6,1,1,1,1,1], # gun
-    [0,0,0,0,0,0,0], # signalman
-    [0,0,0,0,0,0,2], # bomberman
-    [6,5,1,6,1,1,3]  # tank
-]
-
-def skill(id, lose_a, lose_b, fraction):
-    if fraction=='bolshevik':
-        if types[id]=='signalman':
-            if random.randint(0,100)>80:
-                print('BOLSHEVIK: ENEMY IS NEAR!')
-                lose_a = [x-1 for x in lose_a]
-        elif types[id]=='bomberman':
-            if random.randint(0,100)>90:
-                print('BOLSHEVIK: DESTROY OLD ORDER!')
-                lose_b[types.index('gun')] += 5
-    elif fraction=='white':
-        if types[id]=='infantry':
-            if random.randint(0,100)>50:
-                print('WHITE: OFFICIERS OF IMPERIAL ARMY!')
-                lose_a = [x-1 for x in lose_a]
-                lose_b = [x+1 for x in lose_b]
-    return lose_a, lose_b
+from Config import *
 
 def fight(a, b, fraction_a, fraction_b):
     # fight
@@ -60,6 +22,11 @@ def fight(a, b, fraction_a, fraction_b):
     for i in range(len(types)):
         lose_a[i] = f_b[i]//health[i]
         lose_b[i] = f_a[i]//health[i]
+
+        if lose_a[i]==0 and random.uniform(0,1)<f_b[i]/health[i]:
+            lose_a[i]=1
+        if lose_b[i]==0 and random.uniform(0,1)<f_a[i]/health[i]:
+            lose_b[i]=1
 
     # skills
     for i in range(len(a)):
@@ -104,8 +71,8 @@ while True:
             print(types[i]+' '+str(res[1][i]),end=' ')
         print()
     elif event=='spawn':
-        p = random.randint(1,100)
-        if p>spawn_k:
+        p = random.uniform(0,1)
+        if p<spawn_k:
             print('New soldier!')
         else:
             print('No reserve!')
